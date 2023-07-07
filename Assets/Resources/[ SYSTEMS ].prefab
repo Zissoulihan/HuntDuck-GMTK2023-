@@ -27,7 +27,179 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3482898256105718571}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8792126478459725657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3482898256105718571}
+  - component: {fileID: 4312381997386152590}
+  - component: {fileID: 5943950116640517568}
+  m_Layer: 0
+  m_Name: InputHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3482898256105718571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8792126478459725657}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 293873159934828807}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4312381997386152590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8792126478459725657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41efc944a80f61448d3bc6fd1c53c0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _evLMBDown: {fileID: 11400000, guid: aed6853cc8964c044a4c998b022650d2, type: 2}
+  _evLMBUp: {fileID: 11400000, guid: 7632de2fbb2704841b470d0b22189fb3, type: 2}
+  _evRMBDown: {fileID: 11400000, guid: 65b85374549a6c04089c9a301a857120, type: 2}
+  _evRMBUp: {fileID: 11400000, guid: 07c3a42e77949f641bf6e4b8febf30e1, type: 2}
+  _evMousePos: {fileID: 11400000, guid: d55a39b6978d8e64ca696bfea76acbb8, type: 2}
+  _evMoveInput: {fileID: 11400000, guid: 517d8310d3eedce468ca3a3a6c88eb8e, type: 2}
+  _evSpacebarDown: {fileID: 11400000, guid: 5ee73f8bbeca18945ad45fbe9ff40f42, type: 2}
+  _evSpacebarUp: {fileID: 11400000, guid: 39047a22758111b43b2d3c1eff073bf7, type: 2}
+--- !u!114 &5943950116640517568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8792126478459725657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9f71f16d58b1a6042ab4659a35608e3f, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4312381997386152590}
+        m_TargetAssemblyTypeName: InputRelay, Assembly-CSharp
+        m_MethodName: RelayMoveInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ce806a8c-52a3-4c98-870e-26a75eb3b7b3
+    m_ActionName: PlayerActionMap/WASD[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4312381997386152590}
+        m_TargetAssemblyTypeName: InputRelay, Assembly-CSharp
+        m_MethodName: RelaySpacebarToggle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8a1e3438-f6e4-4ba5-b441-0b80facb68fa
+    m_ActionName: PlayerActionMap/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4312381997386152590}
+        m_TargetAssemblyTypeName: InputRelay, Assembly-CSharp
+        m_MethodName: RelayMousePos
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c5b9bcdb-c746-4741-93ef-86f6fcdb6bed
+    m_ActionName: PlayerActionMap/MousePos[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4312381997386152590}
+        m_TargetAssemblyTypeName: InputRelay, Assembly-CSharp
+        m_MethodName: RelayLMBToggle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 76b9a97c-b222-4670-b4a6-b62f8e4c155f
+    m_ActionName: PlayerActionMap/LMB[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4312381997386152590}
+        m_TargetAssemblyTypeName: InputRelay, Assembly-CSharp
+        m_MethodName: RelayRMBToggle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 87bbbff5-bdff-4917-9023-8f42bc5becaf
+    m_ActionName: PlayerActionMap/RMB[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 91bd15bc-982d-4669-9078-9b01d5dc5c98
+    m_ActionName: PlayerActionMap/MouseScroll[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5fafc4f0-eeb4-4020-a742-955fc35876e4
+    m_ActionName: PlayerActionMap/MouseDelta[/Mouse/delta]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: PlayerActionMap
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
