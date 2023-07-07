@@ -10,13 +10,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float _moveSpeed;
 
     Vector2 _moveInput = new();
-    int _facingDir = 1;
+
+    bool _newFacing = false;
     float _xScale;
+    int _facingDir = 1;
 
     private void Awake()
     {
-        _xScale = _tfPlayer.localScale.x;
+        _xScale = _tfFacingPivot.localScale.x;
     }
+
     private void OnEnable()
     {
         _evMoveInput.Subscribe(UpdateMoveInput);
@@ -28,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         MovePlayer();
+        CheckFacing();
     }
     private void LateUpdate()
     {
@@ -36,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
 
     void SetSpriteFacing()
     {
+        if (!_newFacing) return;
+        _tfFacingPivot.localScale = new(_xScale * _facingDir, _tfFacingPivot.localScale.y, _tfFacingPivot.localScale.z);
+        _newFacing = false;
     }
 
     void MovePlayer()
@@ -43,6 +50,15 @@ public class PlayerMovement : MonoBehaviour
         if (_moveInput == Vector2.zero) return;
 
         _tfPlayer.position += new Vector3(_moveInput.x * _moveSpeed * Time.deltaTime, _moveInput.y * _moveSpeed * Time.deltaTime, 0f);
+    }
+
+    void CheckFacing()
+    {
+        var moveLRDir = (int)Mathf.Sign(_moveInput.x);
+        if (_facingDir != moveLRDir) {
+            _facingDir = moveLRDir;
+            _newFacing = true;
+        }
     }
 
     void UpdateMoveInput(Vector2 input)
