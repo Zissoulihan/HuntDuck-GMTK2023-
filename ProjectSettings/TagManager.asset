@@ -11,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Doggo
+  - Terrain
+  - FX
+  - Hunter
   - 
   - 
   - 
@@ -40,4 +40,28 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: TerrainBG
+    uniqueID: 131168165
+    locked: 0
+  - name: TerrainMid
+    uniqueID: 554842123
+    locked: 0
+  - name: Player
+    uniqueID: 4240850405
+    locked: 0
+  - name: Doggo
+    uniqueID: 835838081
+    locked: 0
+  - name: Hunter
+    uniqueID: 2635533793
+    locked: 0
+  - name: TerrainFG
+    uniqueID: 2424000397
+    locked: 0
+  - name: FX
+    uniqueID: 3771132983
+    locked: 0
+  - name: UI
+    uniqueID: 2034521033
     locked: 0

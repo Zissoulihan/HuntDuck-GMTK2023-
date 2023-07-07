@@ -5,11 +5,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Transform _tfPlayer;
+    [SerializeField] Transform _tfFacingPivot;
     [SerializeField] GameEventVector2 _evMoveInput;
     [SerializeField] float _moveSpeed;
 
     Vector2 _moveInput = new();
+    int _facingDir = 1;
+    float _xScale;
 
+    private void Awake()
+    {
+        _xScale = _tfPlayer.localScale.x;
+    }
     private void OnEnable()
     {
         _evMoveInput.Subscribe(UpdateMoveInput);
@@ -21,6 +28,14 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         MovePlayer();
+    }
+    private void LateUpdate()
+    {
+        SetSpriteFacing();
+    }
+
+    void SetSpriteFacing()
+    {
     }
 
     void MovePlayer()
