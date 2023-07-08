@@ -54,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckFacing()
     {
+        if ((int)_moveInput.x == 0) return;
         var moveLRDir = (int)Mathf.Sign(_moveInput.x);
         if (_facingDir != moveLRDir) {
             _facingDir = moveLRDir;

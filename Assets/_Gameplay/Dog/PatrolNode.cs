@@ -11,10 +11,10 @@ public class PatrolNode : MonoBehaviour
     private void Awake()
     {
         WorldPos = transform.position;
-        _evPatrolNodeInit.TriggerEvent(this);
     }
     private void Start()
     {
+        _evPatrolNodeInit.TriggerEvent(this);
     }
     public void Visit()
     {

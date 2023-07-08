@@ -8,7 +8,7 @@ public class DogMovement : MonoBehaviour
     [SerializeField] float _moveDelaySeconds;
     [SerializeField] float _goalProximityTolerance;
 
-    public bool Moving => _activeMovement == null;
+    public bool Moving => _activeMovement != null;
 
     Coroutine _activeMovement = null;
 
@@ -22,6 +22,7 @@ public class DogMovement : MonoBehaviour
     }
     IEnumerator MoveToTarget()
     {
+        print($"MoveToTarget");
         WaitForSeconds delay = TaroH.GetWait(_moveDelaySeconds);
 
         while (Vector3.Distance(transform.position,_targetPos) > _goalProximityTolerance) {
@@ -31,6 +32,6 @@ public class DogMovement : MonoBehaviour
 
         //Target reached
         _activeMovement = null;
-
+        print($"MoveToTarget DONEZO");
     }
 }

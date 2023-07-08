@@ -22,9 +22,10 @@ public class DogStatus : MonoBehaviour
 
     float _idleTime = 0f;
 
-    private void Awake()
+    private void Start()
     {
         State = DogState.Idle;
+        EnterState(State);
     }
     private void OnEnable()
     {
@@ -80,7 +81,7 @@ public class DogStatus : MonoBehaviour
         }
         void EnterInvestigate()
         {
-
+            _activeBehavior = StartCoroutine(BehaveInvestigate());
         }
         void EnterChase()
         {
@@ -106,6 +107,7 @@ public class DogStatus : MonoBehaviour
                 return;
         }
 
+        //TODO: Add DogSense check for duck
         void UpdateIdle()
         {
             if (Time.time < _idleTime + _durationIdle) return;
@@ -169,6 +171,23 @@ public class DogStatus : MonoBehaviour
 
     #region Behaviors
 
+    #region Investigate
+    IEnumerator BehaveInvestigate()
+    {
+        Vector3 targetPos = _activeInvestigateNode.WorldPos;
+        _move.MoveToPosition(targetPos);
+
+        while (_move.Moving) {
+            if (_activeInvestigateNode.WorldPos != targetPos) {
+                //Target changed
+                targetPos = _activeInvestigateNode.WorldPos;
+                _move.MoveToPosition(_activeInvestigateNode.WorldPos);
+            }
+            yield return null;
+        }
+    }
+    #endregion
+
     #region Patrol
     IEnumerator BehavePatrol()
     {
@@ -176,16 +195,18 @@ public class DogStatus : MonoBehaviour
             _targetPatrolNode = SelectPatrolNode();
             yield return null;
         }
-
         _move.MoveToPosition(_targetPatrolNode.WorldPos);
 
         while (_move.Moving) {
             yield return null;
         }
 
+        _targetPatrolNode.Visit();
         _lastPatrolNode = _targetPatrolNode;
         _targetPatrolNode = null;
         _activeBehavior = null;
+
+        ChangeState(DogState.Idle);
     }
     PatrolNode SelectPatrolNode()
     {
@@ -194,13 +215,15 @@ public class DogStatus : MonoBehaviour
         }
 
         PatrolNode tarNode = null;
-        float minTime = -1f;
+        float minTime = Time.time;
+        print($"Mintime={minTime}");
         foreach (var node in _patrolNodes) {
             if (node.LastVisitTime <= minTime) {
                 tarNode = node;
                 minTime = node.LastVisitTime;
             }
         }
+        print($"Node is {tarNode}");
         return tarNode;
     }
     PatrolNode SelectClosestPatrolNode()
@@ -240,10 +263,14 @@ public class DogStatus : MonoBehaviour
             //Already investigating, prioritize new source
             _activeInvestigateNode = node;
             return;
+        } else {
+            _activeInvestigateNode = node;
+            ChangeState(DogState.Investigate);
         }
     }
     void TrackPatrolNode(PatrolNode node)
     {
+        print("NODE REGISTERED");
         _patrolNodes.Add(node);
     }
 
