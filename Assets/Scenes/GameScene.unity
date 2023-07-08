@@ -1516,6 +1516,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2120816196}
+  - component: {fileID: 2120816199}
+  - component: {fileID: 2120816197}
+  - component: {fileID: 2120816198}
   m_Layer: 7
   m_Name: Dog
   m_TagString: Untagged
@@ -1539,6 +1542,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2120816197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120816195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a23fcec1c33ff2d449bae444269d96d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2120816198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120816195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6108737453e40f64da693e60bc2a35bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2120816199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120816195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9bb78a88020f54ea58e2835f300365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _move: {fileID: 2120816197}
+  _evDogInvestigating: {fileID: 0}
+  _evDogChase: {fileID: 0}
+  _evInvestigateNodeAlert: {fileID: 0}
+  _evPatrolNodeInit: {fileID: 0}
 --- !u!1001 &2789950155902060659
 PrefabInstance:
   m_ObjectHideFlags: 0
