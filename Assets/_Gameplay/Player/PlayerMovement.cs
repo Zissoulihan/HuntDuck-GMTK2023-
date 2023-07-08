@@ -8,26 +8,35 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody2D _rb;
     [SerializeField] Transform _tfFacingPivot;
     [SerializeField] GameEventVector2 _evMoveInput;
-    [SerializeField] float _moveSpeed;
+    [SerializeField] float _moveSpeedDefault;
+    [SerializeField] float _moveSpeedChased;
+    [SerializeField] GameEventDogState _evDogStateChanged;
+    [SerializeField] GameEventVoid _evAttackedDefeat;
 
     Vector2 _moveInput = new();
 
     bool _newFacing = false;
     float _xScale;
     int _facingDir = 1;
+    float _currentSpeed;
 
     private void Awake()
     {
         _xScale = _tfFacingPivot.localScale.x;
+        _currentSpeed = _moveSpeedDefault;
     }
 
     private void OnEnable()
     {
         _evMoveInput.Subscribe(UpdateMoveInput);
+        _evDogStateChanged.Subscribe(CheckDogState);
+        _evAttackedDefeat.Subscribe(Defeat);
     }
     private void OnDisable()
     {
         _evMoveInput.Unsubscribe(UpdateMoveInput);
+        _evDogStateChanged.Unsubscribe(CheckDogState);
+        _evAttackedDefeat.Unsubscribe(Defeat);
     }
     private void FixedUpdate()
     {
@@ -51,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         if (_moveInput == Vector2.zero) return;
 
         //_tfPlayer.position += new Vector3(_moveInput.x * _moveSpeed * Time.deltaTime, _moveInput.y * _moveSpeed * Time.deltaTime, 0f);
-        _rb.MovePosition(_tfPlayer.position + new Vector3(_moveInput.x * _moveSpeed, _moveInput.y * _moveSpeed, 0f));
+        _rb.MovePosition(_tfPlayer.position + new Vector3(_moveInput.x * _currentSpeed, _moveInput.y * _currentSpeed, 0f));
     }
 
     void CheckFacing()
@@ -67,5 +76,18 @@ public class PlayerMovement : MonoBehaviour
     void UpdateMoveInput(Vector2 input)
     {
         _moveInput = input;
+    }
+
+    void CheckDogState(DogState state)
+    {
+        if (state != DogState.Chase) {
+            _currentSpeed = _moveSpeedDefault;
+            return; 
+        }
+        _currentSpeed = _moveSpeedChased;
+    }
+    void Defeat()
+    {
+        _currentSpeed = 0f;
     }
 }
