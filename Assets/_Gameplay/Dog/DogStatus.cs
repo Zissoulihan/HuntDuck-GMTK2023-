@@ -6,11 +6,13 @@ public class DogStatus : MonoBehaviour
 {
     [SerializeField] DogMovement _move;
     [SerializeField] float _durationIdle;
+    [SerializeField] float _distanceLeash;
     [SerializeField] GameEventVoid _evDogInvestigating;
     [SerializeField] GameEventVoid _evDogChase;
     [SerializeField] GameEventInvestigateNode _evInvestigateNodeAlert;
     [SerializeField] GameEventPatrolNode _evPatrolNodeInit;
     [SerializeField] GameEventTransform _evPlayerDetected;
+    [SerializeField] GameEventVoid _evPlayerLost;
 
     public DogState State { get; private set; }
 
@@ -20,6 +22,8 @@ public class DogStatus : MonoBehaviour
     InvestigateNode _activeInvestigateNode;
 
     Coroutine _activeBehavior = null;
+
+    Transform _playerTarget = null;
 
     float _idleTime = 0f;
 
@@ -32,11 +36,13 @@ public class DogStatus : MonoBehaviour
     {
         _evInvestigateNodeAlert.Subscribe(HandleInvestigateAlert);
         _evPatrolNodeInit.Subscribe(TrackPatrolNode);
+        _evPlayerDetected.Subscribe(PlayerDetected);
     }
     private void OnDisable()
     {
         _evInvestigateNodeAlert.Unsubscribe(HandleInvestigateAlert);
         _evPatrolNodeInit.Unsubscribe(TrackPatrolNode);
+        _evPlayerDetected.Unsubscribe(PlayerDetected);
     }
 
     public void ChangeState(DogState newState)
@@ -172,6 +178,15 @@ public class DogStatus : MonoBehaviour
     #endregion
 
     #region Behaviors
+    #region Chase
+    bool PlayerInRange()
+    {
+        if (_playerTarget == null) return false;
+        float dist = Vector3.Distance(transform.position, _playerTarget.position);
+        if (dist < _distanceLeash) return true;
+        return false;
+    }
+    #endregion
 
     #region Investigate
     IEnumerator BehaveInvestigate()
@@ -276,6 +291,12 @@ public class DogStatus : MonoBehaviour
         _patrolNodes.Add(node);
     }
 
+    void PlayerDetected(Transform pcTransform)
+    {
+        if (State == DogState.Chase) return;
+        _playerTarget = pcTransform;
+        ChangeState(DogState.Chase);
+    }
 
 }
 
