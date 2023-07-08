@@ -17,6 +17,15 @@ public class DogMovement : MonoBehaviour
     Coroutine _activeMovement = null;
 
     Vector3 _targetPos;
+
+    float _xScale;
+    bool _changeFacing;
+    int _facingDir = 1;
+
+    private void Awake()
+    {
+        _xScale = _tfFacing.localScale.x;
+    }
     public void UpdateTargetPos(Vector3 pos)
     {
         _targetPos = pos;
@@ -53,7 +62,7 @@ public class DogMovement : MonoBehaviour
         }
 
         float startTime = Time.time;
-        //Vector3 origPos = transform.position;
+        Vector3 origPos = transform.position;
 
         while (Vector3.Distance(transform.position,_targetPos) > _goalProximityTolerance) {
             if (state == DogState.Chase) {
@@ -62,6 +71,7 @@ public class DogMovement : MonoBehaviour
             }
             transform.position = Vector3.MoveTowards(transform.position, _targetPos, spd);
             //RotateFacing(origPos);
+            CheckFacing(transform.position - origPos);
             yield return delay;
         }
 
@@ -69,6 +79,26 @@ public class DogMovement : MonoBehaviour
         _activeMovement = null;
     }
 
+    void CheckFacing(Vector3 moveDir)
+    {
+        if (moveDir.x == 0) return;
+        var moveLRDir = (int)Mathf.Sign(moveDir.x);
+        if (_facingDir != moveLRDir) {
+            _facingDir = moveLRDir;
+            _changeFacing = true;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        UpdateFacing();
+    }
+    void UpdateFacing()
+    {
+        if (!_changeFacing) return;
+        _tfFacing.localScale = new(_xScale * _facingDir, _tfFacing.localScale.y, _tfFacing.localScale.z);
+        _changeFacing = false;
+    }
     void RotateFacing(Vector3 origPos)
     {
         Vector3 moveDirection = transform.position - origPos;

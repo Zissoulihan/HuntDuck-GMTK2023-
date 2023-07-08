@@ -6,13 +6,17 @@ public class DogStatus : MonoBehaviour
 {
     [SerializeField] DogMovement _move;
     [SerializeField] float _durationIdle;
+    [SerializeField] float _durationDelayChase;
     [SerializeField] float _distanceLeash;
+    [SerializeField] float _distanceAttack;
     [SerializeField] GameEventVoid _evDogInvestigating;
     [SerializeField] GameEventVoid _evDogChase;
     [SerializeField] GameEventInvestigateNode _evInvestigateNodeAlert;
     [SerializeField] GameEventPatrolNode _evPatrolNodeInit;
     [SerializeField] GameEventTransform _evPlayerDetected;
     [SerializeField] GameEventVoid _evPlayerLost;
+    [SerializeField] GameEventVoid _evPlayerAttacked;
+    [SerializeField] GameEventDogState _evDogStateEntered;
 
     public DogState State { get; private set; }
 
@@ -52,6 +56,7 @@ public class DogStatus : MonoBehaviour
         State = newState;
         //print($"Dog entering state {newState}");
         EnterState(State);
+        _evDogStateEntered.TriggerEvent(State);
     }
     private void Update()
     {
@@ -92,7 +97,7 @@ public class DogStatus : MonoBehaviour
         }
         void EnterChase()
         {
-
+            _activeBehavior = StartCoroutine(BehaveChase());
         }
     }
     void UpdateState(DogState state)
@@ -114,7 +119,6 @@ public class DogStatus : MonoBehaviour
                 return;
         }
 
-        //TODO: Add DogSense check for duck
         void UpdateIdle()
         {
             if (Time.time < _idleTime + _durationIdle) return;
@@ -179,6 +183,33 @@ public class DogStatus : MonoBehaviour
 
     #region Behaviors
     #region Chase
+    IEnumerator BehaveChase()
+    {
+        yield return TaroH.GetWait(_durationDelayChase);
+
+        _move.MoveToPosition(_playerTarget.position, DogState.Chase);
+        while (PlayerInRange()) {
+            _move.UpdateTargetPos(_playerTarget.position);
+            if (Vector3.Distance(transform.position, _playerTarget.position) < _distanceAttack) {
+                ChaseAttackPlayer();
+            }
+            yield return null;
+        }
+
+        if (!PlayerInRange()) _evPlayerLost.TriggerEvent();
+
+        _playerTarget = null;
+        _activeBehavior = null;
+        ChangeState(DogState.Idle);
+        //TODO: Add investigate node @ player's last position?
+    }
+
+    void ChaseAttackPlayer()
+    {
+        print("GAME OVER, MAN!");
+        _evPlayerAttacked.TriggerEvent();
+    }
+
     bool PlayerInRange()
     {
         if (_playerTarget == null) return false;
@@ -202,6 +233,11 @@ public class DogStatus : MonoBehaviour
             }
             yield return null;
         }
+
+        _activeBehavior = null;
+        _activeInvestigateNode = null;
+
+        ChangeState(DogState.Idle);
     }
     #endregion
 
