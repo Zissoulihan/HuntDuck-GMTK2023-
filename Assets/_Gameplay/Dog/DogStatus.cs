@@ -10,6 +10,7 @@ public class DogStatus : MonoBehaviour
     [SerializeField] GameEventVoid _evDogChase;
     [SerializeField] GameEventInvestigateNode _evInvestigateNodeAlert;
     [SerializeField] GameEventPatrolNode _evPatrolNodeInit;
+    [SerializeField] GameEventTransform _evPlayerDetected;
 
     public DogState State { get; private set; }
 
