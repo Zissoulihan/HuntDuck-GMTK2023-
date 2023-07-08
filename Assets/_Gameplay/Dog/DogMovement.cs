@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class DogMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] float _moveSpeed;
+    [SerializeField] float _moveDelaySeconds;
+    [SerializeField] float _goalProximityTolerance;
 
-    // Update is called once per frame
-    void Update()
+    public bool Moving => _activeMovement == null;
+
+    Coroutine _activeMovement = null;
+
+    Vector3 _targetPos;
+
+    public void MoveToPosition(Vector3 pos)
     {
-        
+        if (Moving) StopCoroutine(_activeMovement);
+        _targetPos = pos;
+        _activeMovement = StartCoroutine(MoveToTarget());
+    }
+    IEnumerator MoveToTarget()
+    {
+        WaitForSeconds delay = TaroH.GetWait(_moveDelaySeconds);
+
+        while (Vector3.Distance(transform.position,_targetPos) > _goalProximityTolerance) {
+            transform.position = Vector3.MoveTowards(transform.position, _targetPos, _moveSpeed);
+            yield return delay;
+        }
+
+        //Target reached
+        _activeMovement = null;
+
     }
 }
