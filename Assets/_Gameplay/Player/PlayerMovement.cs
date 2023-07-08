@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Transform _tfPlayer;
+    [SerializeField] Rigidbody2D _rb;
     [SerializeField] Transform _tfFacingPivot;
     [SerializeField] GameEventVector2 _evMoveInput;
     [SerializeField] float _moveSpeed;
@@ -28,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _evMoveInput.Unsubscribe(UpdateMoveInput);
     }
-    private void Update()
+    private void FixedUpdate()
     {
         MovePlayer();
         CheckFacing();
@@ -49,7 +50,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_moveInput == Vector2.zero) return;
 
-        _tfPlayer.position += new Vector3(_moveInput.x * _moveSpeed * Time.deltaTime, _moveInput.y * _moveSpeed * Time.deltaTime, 0f);
+        //_tfPlayer.position += new Vector3(_moveInput.x * _moveSpeed * Time.deltaTime, _moveInput.y * _moveSpeed * Time.deltaTime, 0f);
+        _rb.MovePosition(_tfPlayer.position + new Vector3(_moveInput.x * _moveSpeed, _moveInput.y * _moveSpeed, 0f));
     }
 
     void CheckFacing()

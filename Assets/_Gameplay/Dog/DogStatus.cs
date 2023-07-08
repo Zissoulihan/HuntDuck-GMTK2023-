@@ -40,10 +40,10 @@ public class DogStatus : MonoBehaviour
 
     public void ChangeState(DogState newState)
     {
-        print($"Dog exiting state {State}");
+        //print($"Dog exiting state {State}");
         ExitState(State);
         State = newState;
-        print($"Dog entering state {newState}");
+        //print($"Dog entering state {newState}");
         EnterState(State);
     }
     private void Update()
@@ -217,14 +217,14 @@ public class DogStatus : MonoBehaviour
 
         PatrolNode tarNode = null;
         float minTime = Time.time;
-        print($"Mintime={minTime}");
+        //print($"Mintime={minTime}");
         foreach (var node in _patrolNodes) {
             if (node.LastVisitTime <= minTime) {
                 tarNode = node;
                 minTime = node.LastVisitTime;
             }
         }
-        print($"Node is {tarNode}");
+        //print($"Node is {tarNode}");
         return tarNode;
     }
     PatrolNode SelectClosestPatrolNode()
@@ -271,7 +271,7 @@ public class DogStatus : MonoBehaviour
     }
     void TrackPatrolNode(PatrolNode node)
     {
-        print("NODE REGISTERED");
+        //print("NODE REGISTERED");
         _patrolNodes.Add(node);
     }
 

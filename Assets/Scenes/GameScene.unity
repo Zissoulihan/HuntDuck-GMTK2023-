@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 79744359}
   - component: {fileID: 79744360}
   - component: {fileID: 79744361}
+  - component: {fileID: 79744362}
   m_Layer: 6
   m_Name: PlayerDuck
   m_TagString: Untagged
@@ -172,9 +173,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tfPlayer: {fileID: 79744359}
+  _rb: {fileID: 79744362}
   _tfFacingPivot: {fileID: 1238424967}
   _evMoveInput: {fileID: 11400000, guid: 517d8310d3eedce468ca3a3a6c88eb8e, type: 2}
-  _moveSpeed: 3.75
+  _moveSpeed: 0.3
 --- !u!114 &79744361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +189,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30228fcd156ff5d418a0ece5cec4520c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &79744362
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79744358}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1001 &135731771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,11 +230,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5952432907226801228, guid: 632e4fe3bfadc674781c639b513173f1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.19
+      value: 12.06
       objectReference: {fileID: 0}
     - target: {fileID: 5952432907226801228, guid: 632e4fe3bfadc674781c639b513173f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.95
+      value: -6.87
       objectReference: {fileID: 0}
     - target: {fileID: 5952432907226801228, guid: 632e4fe3bfadc674781c639b513173f1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -750,7 +779,7 @@ GameObject:
   - component: {fileID: 826279248}
   - component: {fileID: 826279251}
   - component: {fileID: 826279249}
-  - component: {fileID: 826279250}
+  - component: {fileID: 826279252}
   m_Layer: 7
   m_Name: DogVision
   m_TagString: Untagged
@@ -825,8 +854,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!68 &826279250
-EdgeCollider2D:
+--- !u!114 &826279251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826279247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6108737453e40f64da693e60bc2a35bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &826279252
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -858,31 +899,26 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0.19
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 0.64, y: 0.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   m_Points:
-  - {x: -0.4973142, y: 0.03923542}
-  - {x: 0.40423283, y: 0.49812528}
-  - {x: 0.49661455, y: 0.5029855}
-  - {x: 0.49997672, y: -0.49672666}
-  - {x: 0.42884305, y: -0.4959013}
-  - {x: -0.4941507, y: -0.040137768}
-  - {x: -0.4973142, y: 0.03923542}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
---- !u!114 &826279251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 826279247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6108737453e40f64da693e60bc2a35bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+    m_Paths:
+    - - {x: 0.4453125, y: 0.46875}
+      - {x: -0.4375, y: 0.046875}
+      - {x: -0.4453125, y: 0.0390625}
+      - {x: -0.4453125, y: -0.0234375}
+      - {x: 0.4140625, y: -0.4609375}
+      - {x: 0.4921875, y: -0.4609375}
+      - {x: 0.4921875, y: 0.4609375}
+      - {x: 0.484375, y: 0.46875}
+  m_UseDelaunayMesh: 0
 --- !u!1 &878948632
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,7 +1310,7 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1931,7 +1967,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2120816195}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.53, y: 0, z: 0}
+  m_LocalPosition: {x: -14.63, y: 3.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

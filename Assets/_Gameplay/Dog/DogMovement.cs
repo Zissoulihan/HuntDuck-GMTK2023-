@@ -34,7 +34,7 @@ public class DogMovement : MonoBehaviour
     }
     IEnumerator MoveToTarget(DogState state)
     {
-        print($"MoveToTarget");
+        //print($"MoveToTarget");
         WaitForSeconds delay = TaroH.GetWait(_moveDelaySeconds);
         float spd = _moveSpeedPatrol;
         switch (state) {
