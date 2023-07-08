@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class DogMovement : MonoBehaviour
 {
-    [SerializeField] float _moveSpeed;
+    [SerializeField] Transform _tfFacing;
+    [SerializeField] float _moveSpeedPatrol;
+    [SerializeField] float _moveSpeedInvestigate;
+    [SerializeField] Vector2 _moveSpeedChase;
+    [SerializeField] float _durationChaseAccel;
     [SerializeField] float _moveDelaySeconds;
     [SerializeField] float _goalProximityTolerance;
 
@@ -13,25 +17,64 @@ public class DogMovement : MonoBehaviour
     Coroutine _activeMovement = null;
 
     Vector3 _targetPos;
-
-    public void MoveToPosition(Vector3 pos)
+    public void UpdateTargetPos(Vector3 pos)
+    {
+        _targetPos = pos;
+    }
+    public void MoveToPosition(Vector3 pos, DogState state)
     {
         if (Moving) StopCoroutine(_activeMovement);
         _targetPos = pos;
-        _activeMovement = StartCoroutine(MoveToTarget());
+        _activeMovement = StartCoroutine(MoveToTarget(state));
     }
-    IEnumerator MoveToTarget()
+    public void CancelMove()
+    {
+        if (Moving) StopCoroutine(_activeMovement);
+        _activeMovement = null;
+    }
+    IEnumerator MoveToTarget(DogState state)
     {
         print($"MoveToTarget");
         WaitForSeconds delay = TaroH.GetWait(_moveDelaySeconds);
+        float spd = _moveSpeedPatrol;
+        switch (state) {
+            case DogState.Idle:
+            case DogState.Patrol:
+                spd = _moveSpeedPatrol;
+                break;
+            case DogState.Investigate:
+                spd = _moveSpeedInvestigate;
+                break;
+            case DogState.Chase:
+                spd = _moveSpeedChase.x;
+                break;
+            default:
+                break;
+        }
+
+        float startTime = Time.time;
+        //Vector3 origPos = transform.position;
 
         while (Vector3.Distance(transform.position,_targetPos) > _goalProximityTolerance) {
-            transform.position = Vector3.MoveTowards(transform.position, _targetPos, _moveSpeed);
+            if (state == DogState.Chase) {
+                float t = Time.time - startTime / _durationChaseAccel;
+                spd = Mathf.Lerp(_moveSpeedChase.x, _moveSpeedChase.y, t);
+            }
+            transform.position = Vector3.MoveTowards(transform.position, _targetPos, spd);
+            //RotateFacing(origPos);
             yield return delay;
         }
 
         //Target reached
         _activeMovement = null;
-        print($"MoveToTarget DONEZO");
+    }
+
+    void RotateFacing(Vector3 origPos)
+    {
+        Vector3 moveDirection = transform.position - origPos;
+        if (moveDirection != Vector3.zero) {
+            float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+            _tfFacing.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
     }
 }

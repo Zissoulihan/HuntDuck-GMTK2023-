@@ -47,6 +47,9 @@ TagManager:
   - name: TerrainMid
     uniqueID: 554842123
     locked: 0
+  - name: DogVision
+    uniqueID: 232847027
+    locked: 0
   - name: Player
     uniqueID: 4240850405
     locked: 0

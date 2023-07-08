@@ -149,6 +149,7 @@ public class DogStatus : MonoBehaviour
             StopCoroutine(_activeBehavior);
             _activeBehavior = null;
         }
+        _move.CancelMove();
 
         void ExitIdle()
         {
@@ -175,13 +176,13 @@ public class DogStatus : MonoBehaviour
     IEnumerator BehaveInvestigate()
     {
         Vector3 targetPos = _activeInvestigateNode.WorldPos;
-        _move.MoveToPosition(targetPos);
+        _move.MoveToPosition(targetPos, DogState.Investigate);
 
         while (_move.Moving) {
             if (_activeInvestigateNode.WorldPos != targetPos) {
                 //Target changed
                 targetPos = _activeInvestigateNode.WorldPos;
-                _move.MoveToPosition(_activeInvestigateNode.WorldPos);
+                _move.MoveToPosition(_activeInvestigateNode.WorldPos, DogState.Investigate);
             }
             yield return null;
         }
@@ -195,7 +196,7 @@ public class DogStatus : MonoBehaviour
             _targetPatrolNode = SelectPatrolNode();
             yield return null;
         }
-        _move.MoveToPosition(_targetPatrolNode.WorldPos);
+        _move.MoveToPosition(_targetPatrolNode.WorldPos, DogState.Patrol);
 
         while (_move.Moving) {
             yield return null;
