@@ -33,7 +33,6 @@ public class WinLoseHandler : MonoBehaviour
     }
     void GameLost()
     {
-        print("game lost");
         _fade.Hide();
         GameEnd(false);
     }
