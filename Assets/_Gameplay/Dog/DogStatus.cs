@@ -213,8 +213,9 @@ public class DogStatus : MonoBehaviour
 
     void ChaseAttackPlayer()
     {
-        print("GAME OVER, MAN!");
+        //print("GAME OVER, MAN!");
         _evPlayerAttacked.TriggerEvent();
+        Destroy(gameObject, 1.5f);
     }
 
     bool PlayerInRange()
