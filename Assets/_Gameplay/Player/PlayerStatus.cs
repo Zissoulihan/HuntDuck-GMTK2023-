@@ -7,6 +7,7 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] UIAnimatedElement _uiAlert;
     [SerializeField] GameEventDogState _evDogStateChange;
     public Vector3 PlayerPosition => transform.position;
+    public bool Immortal = false;
 
     private void OnEnable()
     {
@@ -15,6 +16,11 @@ public class PlayerStatus : MonoBehaviour
     private void OnDisable()
     {
         _evDogStateChange.Unsubscribe(CheckDogState);
+    }
+
+    public void BecomeImmortal()
+    {
+
     }
 
     void CheckDogState(DogState state)

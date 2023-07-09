@@ -23,6 +23,7 @@ public class DogSense : MonoBehaviour
     {
         var pc = collision.gameObject.GetComponentInParent<PlayerStatus>();
         if (pc == null) return;
+        if (pc.Immortal) return;
         if (!EyesOnPlayer(pc.transform)) return;
 
         print("GOTTEM");

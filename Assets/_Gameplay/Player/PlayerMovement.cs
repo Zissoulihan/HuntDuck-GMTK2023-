@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float _moveSpeedChased;
     [SerializeField] GameEventDogState _evDogStateChanged;
     [SerializeField] GameEventVoid _evAttackedDefeat;
+    [SerializeField] GameEventVoid _evGameOver;
 
     Vector2 _moveInput = new();
 
@@ -89,5 +90,6 @@ public class PlayerMovement : MonoBehaviour
     void Defeat()
     {
         _currentSpeed = 0f;
+        _evGameOver.TriggerEvent();
     }
 }
