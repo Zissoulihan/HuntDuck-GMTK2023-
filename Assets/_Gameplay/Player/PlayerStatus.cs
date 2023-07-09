@@ -9,8 +9,11 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] GameEventDogState _evDogStateChange;
     [SerializeField] Slider _sQuack;
     [SerializeField] float _durationQuackBuildup;
+    [SerializeField] float _interquackDelay;
     [SerializeField] Vector2 _quackBuildupVariance;
     [SerializeField] InvestigateNode _prefabSoundNode;
+    [SerializeField] AudioSource _as;
+    [SerializeField] List<AudioClip> _sfxQuacks;
 
     public Vector3 PlayerPosition => transform.position;
     public bool Immortal = false;
@@ -33,7 +36,7 @@ public class PlayerStatus : MonoBehaviour
 
     private void Start()
     {
-        
+        StartCoroutine(QuackManagement());
     }
 
     IEnumerator QuackManagement()
@@ -47,12 +50,17 @@ public class PlayerStatus : MonoBehaviour
                 yield return null;
             }
 
+            Quack();
+            _sQuack.value = 0f;
+            yield return TaroH.GetWait(_interquackDelay);
         }
     }
 
     void Quack()
     {
-
+        var clip = _sfxQuacks[Random.Range(0, _sfxQuacks.Count - 1)];
+        _as.PlayOneShot(clip);
+        Instantiate(_prefabSoundNode,transform.position, Quaternion.identity);
     }
 
     public void BecomeImmortal()
