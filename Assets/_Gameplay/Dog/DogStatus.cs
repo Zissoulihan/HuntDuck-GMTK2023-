@@ -9,6 +9,7 @@ public class DogStatus : MonoBehaviour
     [SerializeField] float _durationDelayChase;
     [SerializeField] float _distanceLeash;
     [SerializeField] float _distanceAttack;
+    [SerializeField] float _durationDelayInvestigate;
     [SerializeField] GameEventVoid _evDogInvestigating;
     [SerializeField] GameEventVoid _evDogChase;
     [SerializeField] GameEventInvestigateNode _evInvestigateNodeAlert;
@@ -17,6 +18,10 @@ public class DogStatus : MonoBehaviour
     [SerializeField] GameEventVoid _evPlayerLost;
     [SerializeField] GameEventVoid _evPlayerAttacked;
     [SerializeField] GameEventDogState _evDogStateEntered;
+    [SerializeField] AudioSource _as;
+    [SerializeField] AudioClip _sfxBeginInvestigate;
+    [SerializeField] AudioClip _sfxBeginChase;
+    [SerializeField] AudioClip _sfxPatrol;
 
     public DogState State { get; private set; }
 
@@ -89,6 +94,7 @@ public class DogStatus : MonoBehaviour
         }
         void EnterPatrol()
         {
+            _as.PlayOneShot(_sfxPatrol);
             _activeBehavior = StartCoroutine(BehavePatrol());
         }
         void EnterInvestigate()
@@ -97,6 +103,7 @@ public class DogStatus : MonoBehaviour
         }
         void EnterChase()
         {
+            _as.PlayOneShot(_sfxBeginChase);
             _activeBehavior = StartCoroutine(BehaveChase());
         }
     }
@@ -222,8 +229,12 @@ public class DogStatus : MonoBehaviour
     #region Investigate
     IEnumerator BehaveInvestigate()
     {
+        yield return TaroH.GetWait(_durationDelayInvestigate);
+
         Vector3 targetPos = _activeInvestigateNode.WorldPos;
         _move.MoveToPosition(targetPos, DogState.Investigate);
+
+        _as.PlayOneShot(_sfxBeginInvestigate);
 
         while (_move.Moving) {
             if (_activeInvestigateNode.WorldPos != targetPos) {
